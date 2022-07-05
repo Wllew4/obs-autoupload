@@ -1,3 +1,19 @@
+# configuration
+config.*
+!config.template.*
+
+# secrets
+.credentials/*
+!.credentials/*.template.*
+
+# managed secret files
+!.credentials/.managed
+.credentials/.managed/*
+!.credentials/.managed/.gitkeep
+
+
+# python.gitignore
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

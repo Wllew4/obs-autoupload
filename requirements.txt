@@ -1,0 +1,6 @@
+requests
+httplib2
+google-api-python-client
+google-oauth2-tool
+toml
+
