@@ -42,6 +42,6 @@ class VOD:
 		self.date		= VIDEO['created_at'][:10]
 
 	def __fetch_latest_vid(self):
-		vods = glob.glob(CONFIG['files']['VOD_DIR'] + '\\*.mkv')
+		vods: list = glob.glob(CONFIG['files']['VOD_DIR'])
 		self.path = max(vods, key=os.path.getctime)
 

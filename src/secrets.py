@@ -9,7 +9,8 @@ PROJ_DIR = os.path.dirname(os.path.realpath(__file__)) + '\\..\\'
 CONFIG = read_toml('config.toml')
 TTV_CREDS = read_toml('.credentials\\twitch_secrets.toml')
 GOOGLE_CREDS = read_toml('.credentials\\google_secrets.toml')
-open(PROJ_DIR + '.credentials\\.managed\\google_secrets.json', 'w').write(json.dumps({
+MANAGED_GOOGLE_CREDS = PROJ_DIR + '.credentials\\.managed\\google_secrets.json'
+open(MANAGED_GOOGLE_CREDS, 'w').write(json.dumps({
 	"web": {
 		"client_id": GOOGLE_CREDS['client_id'],
 		"client_secret": GOOGLE_CREDS['client_secret'],

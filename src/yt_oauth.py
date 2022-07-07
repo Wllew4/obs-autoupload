@@ -7,10 +7,12 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import run_flow
 
+from .secrets import MANAGED_GOOGLE_CREDS, PROJ_DIR
+
 YOUTUBE_SCOPE = "https://www.googleapis.com/auth/youtube"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
-CLIENT_SECRETS_FILE = ".credentials/.managed/google_secrets.json"
+CLIENT_SECRETS_FILE = MANAGED_GOOGLE_CREDS
 
 # This variable defines a message to display if the CLIENT_SECRETS_FILE is
 # missing.
@@ -35,7 +37,7 @@ def get_authenticated_service():
 		scope=YOUTUBE_SCOPE,
 		message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-	storage = Storage(".credentials/.managed/%s-oauth2.json" % sys.argv[0])
+	storage = Storage(PROJ_DIR + ".credentials/.managed/oauth2.json")
 	credentials = storage.get()
 
 	if credentials is None or credentials.invalid:
