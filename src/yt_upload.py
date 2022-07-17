@@ -91,3 +91,4 @@ def upload(
 		return resumable_upload(insert_request)
 	except HttpError as e:
 		print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+		return (False, e.content)

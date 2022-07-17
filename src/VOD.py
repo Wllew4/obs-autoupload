@@ -43,5 +43,6 @@ class VOD:
 
 	def __fetch_latest_vid(self):
 		vods: list = glob.glob(CONFIG['files']['VOD_DIR'])
-		self.path = max(vods, key=os.path.getctime)
-
+		if vods:
+			self.path = max(vods, key=os.path.getctime)
+		else: self.path = ''
