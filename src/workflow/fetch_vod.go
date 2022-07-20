@@ -1,4 +1,9 @@
-package app
+package workflow
+
+import (
+	"auto_upload/src/apis"
+	"fmt"
+)
 
 type VOD struct {
 	title     string
@@ -10,5 +15,5 @@ type VOD struct {
 }
 
 func FetchVodInfo() {
-
+	fmt.Println(apis.AccessToken())
 }

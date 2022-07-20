@@ -1,8 +1,7 @@
 *.exe
 
 # configuration
-config.*
-!config.template.*
+config.toml
 
 # secrets
 .credentials/*
