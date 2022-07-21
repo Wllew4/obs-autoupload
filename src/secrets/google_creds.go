@@ -1,6 +1,9 @@
 package secrets
 
 import (
+	"auto_upload/src/util"
+	"encoding/json"
+	"io/ioutil"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -15,25 +18,25 @@ func GoogleCreds() google_creds_t {
 	}
 
 	wd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
+	util.CheckErr(err)
 
 	if _, err := toml.DecodeFile(wd+"/.credentials/twitch_secrets.toml", &google_creds); err != nil {
 		panic(err)
 	}
 
-	type managed_creds_inner struct {
-		client_id       string
-		client_secret   string
-		redirect_uris   string
-		auth_uri        string
-		token_uristring string
+	managed := map[string]interface{}{
+		"web": map[string]interface{}{
+			"client_id":     google_creds.Client_id,
+			"client_secret": google_creds.Client_secret,
+			"redirect_uris": []string{},
+			"auth_uri":      "https://accounts.google.com/o/oauth2/auth",
+			"token_uri":     "https://accounts.google.com/o/oauth2/token",
+		},
 	}
 
-	type managed_creds struct {
-		web managed_creds_inner
-	}
+	as_json, err := json.Marshal(managed)
+	util.CheckErr(err)
+	ioutil.WriteFile(wd+"/.credentials/.managed/google_secrets.json", as_json, 0644)
 
 	google_cached = true
 	return google_creds

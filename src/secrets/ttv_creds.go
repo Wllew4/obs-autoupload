@@ -1,6 +1,7 @@
 package secrets
 
 import (
+	"auto_upload/src/util"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -15,9 +16,7 @@ func TTVCreds() ttv_creds_t {
 	}
 
 	wd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
+	util.CheckErr(err)
 
 	if _, err := toml.DecodeFile(wd+"/.credentials/twitch_secrets.toml", &ttv_creds); err != nil {
 		panic(err)
