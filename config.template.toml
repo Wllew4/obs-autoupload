@@ -1,6 +1,5 @@
 [files]
-# !! Use '/' for all paths !!
-# '\' can cause issues in certain cases
+# !! Use '/' for all paths !! '\' will crash the program
 # Local VOD folder
 # The newest file here will be uploaded
 VOD_DIR = ""
