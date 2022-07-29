@@ -1,6 +1,8 @@
+// ADAPTED FROM: https://github.com/youtube/api-samples/blob/master/go/upload_video.go
 package yt
 
 import (
+	"auto_upload/src/ui"
 	"auto_upload/src/util"
 	"os"
 	"strings"
@@ -11,6 +13,7 @@ import (
 )
 
 func Upload(
+	ui_context ui.UIContext,
 	filename string,
 	title string,
 	description string,
@@ -20,7 +23,7 @@ func Upload(
 ) string {
 	keywords := strings.Join(tags, ",")
 
-	client := getClient(youtube.YoutubeUploadScope)
+	client := getClient(ui_context, youtube.YoutubeUploadScope)
 
 	service, err := youtube.NewService(context.Background(), option.WithHTTPClient(client))
 	util.CheckErr(err)

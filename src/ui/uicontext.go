@@ -11,7 +11,7 @@ type UIContext struct {
 	Window fyne.Window
 }
 
-func (context UIContext) setContent(nextStep func(), content ...fyne.CanvasObject) {
+func (ui_context UIContext) SetContent(nextStep func(), content ...fyne.CanvasObject) {
 	container := container.NewVBox()
 
 	for i := range content {
@@ -21,10 +21,10 @@ func (context UIContext) setContent(nextStep func(), content ...fyne.CanvasObjec
 		container.Add(widget.NewButton("Confirm", nextStep))
 	}
 	container.Add(widget.NewButton("Close", func() {
-		context.Window.Close()
+		ui_context.Window.Close()
 	}))
 
-	context.Window.SetContent(container)
+	ui_context.Window.SetContent(container)
 }
 
 func New() UIContext {
@@ -32,9 +32,9 @@ func New() UIContext {
 	window := app.NewWindow("OBS Auto Upload")
 	window.Resize(fyne.NewSize(600, 600))
 
-	context := UIContext{
+	ui_context := UIContext{
 		Window: window,
 	}
-	context.setContent(nil, widget.NewLabel("Fetching VOD info..."))
-	return context
+	ui_context.SetContent(nil, widget.NewLabel("Fetching VOD info..."))
+	return ui_context
 }

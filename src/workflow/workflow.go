@@ -9,25 +9,26 @@ import (
 )
 
 func Start() {
-	context := ui.New()
-	go step_VODInfo(context)
-	context.Window.ShowAndRun()
+	ui_context := ui.New()
+	go step_VODInfo(ui_context)
+	ui_context.Window.ShowAndRun()
 }
 
-func step_VODInfo(context ui.UIContext) {
+func step_VODInfo(ui_context ui.UIContext) {
 	vod_info := fetchVodInfo()
-	ui.ShowVOD(vod_info, step_Upload, context)
+	ui.ShowVOD(ui_context, vod_info, step_Upload)
 }
 
-func step_Upload(context ui.UIContext, vod_info util.VOD) {
+func step_Upload(ui_context ui.UIContext, vod_info util.VOD) {
 	fmt.Println("pressed!")
 	secrets.GoogleCreds()
-	yt.Upload(
+	fmt.Println(yt.Upload(
+		ui_context,
 		vod_info.Path,
 		vod_info.Title,
 		secrets.Config().Upload.DESCRIPTION,
 		secrets.Config().Upload.CATEGORY_ID,
 		secrets.Config().Upload.TAGS,
 		secrets.Config().Upload.VISIBILITY,
-	)
+	))
 }
