@@ -18,8 +18,7 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-func getClient(ui_context ui.UIContext, scope string) *http.Client {
-	ctx := context.Background()
+func GetClient(ui_context ui.UIContext, nextStep func(*http.Client), scope string) {
 
 	b, err := ioutil.ReadFile(".credentials/.managed/google_secrets.json")
 	if err != nil {
@@ -40,19 +39,26 @@ func getClient(ui_context ui.UIContext, scope string) *http.Client {
 		authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
 
 		util.OpenURL(authURL)
-		ui.ReceiveCode(ui_context, exchangeAndSaveToken, config, cacheFile)
+		ui.ReceiveCode(ui_context, oauth2CodeCallback, cacheFile, config, nextStep)
+	} else {
+		// token cached
+		nextStep(config.Client(context.Background(), tok))
 	}
-	return config.Client(ctx, tok)
 }
 
 // Exchange the authorization code for an access token
-func exchangeAndSaveToken(config *oauth2.Config, code string, cacheFile string) *oauth2.Token {
+func oauth2CodeCallback(
+	code string,
+	cacheFile string,
+	config *oauth2.Config,
+	nextStep func(*http.Client),
+) {
 	tok, err := config.Exchange(context.Background(), code)
 	if err != nil {
 		log.Fatalf("Unable to retrieve token %v", err)
 	}
 	saveToken(cacheFile, tok)
-	return tok
+	nextStep(config.Client(context.Background(), tok))
 }
 
 // tokenCacheFile generates credential file path/filename.

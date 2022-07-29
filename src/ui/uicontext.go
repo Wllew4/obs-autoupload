@@ -18,7 +18,7 @@ func (ui_context UIContext) SetContent(nextStep func(), content ...fyne.CanvasOb
 		container.Add(content[i])
 	}
 	if nextStep != nil {
-		container.Add(widget.NewButton("Confirm", nextStep))
+		container.Add(widget.NewButton("Next", nextStep))
 	}
 	container.Add(widget.NewButton("Close", func() {
 		ui_context.Window.Close()
