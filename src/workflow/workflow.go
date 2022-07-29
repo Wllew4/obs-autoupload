@@ -3,6 +3,7 @@ package workflow
 import (
 	"auto_upload/src/secrets"
 	"auto_upload/src/util"
+	"auto_upload/src/w_cleanup"
 	"auto_upload/src/w_oauth2"
 	"auto_upload/src/w_upload"
 	"auto_upload/src/w_vod"
@@ -57,5 +58,5 @@ func (w Workflow) step_Upload(client *http.Client) {
 }
 
 func (w Workflow) step_Cleanup() {
-
+	w_cleanup.UI_cleanup(w.ui_context)
 }

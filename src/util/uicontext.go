@@ -4,8 +4,15 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 )
+
+func PopulatedEntry(text *string) *widget.Entry {
+	o := widget.NewEntry()
+	o.Bind(binding.BindString(text))
+	return o
+}
 
 type UIContext struct {
 	Window fyne.Window

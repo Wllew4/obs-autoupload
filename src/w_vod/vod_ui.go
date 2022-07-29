@@ -4,16 +4,9 @@ import (
 	"auto_upload/src/util"
 
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
-
-func populatedEntry(text *string) *widget.Entry {
-	o := widget.NewEntry()
-	o.Bind(binding.BindString(text))
-	return o
-}
 
 func UI_vod(ui_context util.UIContext, vod_info VOD, nextStep func()) {
 	content := container.New(layout.NewFormLayout(),
@@ -24,10 +17,10 @@ func UI_vod(ui_context util.UIContext, vod_info VOD, nextStep func()) {
 			widget.NewLabel("Url:  \t"),
 		),
 		container.NewVBox(
-			populatedEntry(&vod_info.Title),
-			populatedEntry(&vod_info.Date),
-			populatedEntry(&vod_info.Path),
-			populatedEntry(&vod_info.Ttv_url),
+			util.PopulatedEntry(&vod_info.Title),
+			util.PopulatedEntry(&vod_info.Date),
+			util.PopulatedEntry(&vod_info.Path),
+			util.PopulatedEntry(&vod_info.Ttv_url),
 		),
 	)
 	ui_context.SetContent(
