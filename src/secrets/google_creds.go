@@ -20,7 +20,7 @@ func GoogleCreds() google_creds_t {
 	wd, err := os.Getwd()
 	util.CheckErr(err)
 
-	if _, err := toml.DecodeFile(wd+"/.credentials/twitch_secrets.toml", &google_creds); err != nil {
+	if _, err := toml.DecodeFile(wd+"/.credentials/google_secrets.toml", &google_creds); err != nil {
 		panic(err)
 	}
 
@@ -28,7 +28,7 @@ func GoogleCreds() google_creds_t {
 		"web": map[string]interface{}{
 			"client_id":     google_creds.Client_id,
 			"client_secret": google_creds.Client_secret,
-			"redirect_uris": []string{},
+			"redirect_uris": []string{"http://localhost:8080/"},
 			"auth_uri":      "https://accounts.google.com/o/oauth2/auth",
 			"token_uri":     "https://accounts.google.com/o/oauth2/token",
 		},
