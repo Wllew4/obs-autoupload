@@ -4,11 +4,9 @@ package w_upload
 import (
 	"auto_upload/src/util"
 	"fmt"
-	"net/url"
 	"os"
 	"strings"
 
-	"fyne.io/fyne/v2/widget"
 	"google.golang.org/api/youtube/v3"
 )
 
@@ -40,7 +38,7 @@ func Upload(
 		upload.Snippet.Tags = strings.Split(keywords, ",")
 	}
 
-	ui_context.SetContent(func() {}, widget.NewLabel("Uploading...\nThis may take awhile..."))
+	ui_uploading(ui_context)
 	var id string
 	if !DEBUGNOUPLOAD {
 		call := service.Videos.Insert([]string{"snippet", "status"}, upload)
@@ -57,13 +55,7 @@ func Upload(
 		id = "ID-HERE"
 	}
 
-	url, err := url.Parse("https://youtube.com/watch?v=" + id)
-	util.CheckErr(err)
-	ui_context.SetContent(
-		func() { nextStep() },
-		widget.NewLabel("Success!"),
-		widget.NewHyperlink("https://youtube.com/watch?v="+id, url),
-	)
+	ui_uploaded(ui_context, nextStep, id)
 
 	return id
 }

@@ -29,7 +29,7 @@ func Start() {
 
 func (w Workflow) step_VODInfo() {
 	w.vod_info = w_vod.FetchVodInfo()
-	w_vod.ShowVOD(w.ui_context, w.vod_info, w.step_OAuth2)
+	w_vod.UI_vod(w.ui_context, w.vod_info, w.step_OAuth2)
 }
 
 func (w Workflow) step_OAuth2() {

@@ -15,7 +15,7 @@ func populatedEntry(text *string) *widget.Entry {
 	return o
 }
 
-func ShowVOD(ui_context util.UIContext, vod_info VOD, nextStep func()) {
+func UI_vod(ui_context util.UIContext, vod_info VOD, nextStep func()) {
 	content := container.New(layout.NewFormLayout(),
 		container.NewVBox(
 			widget.NewLabel("Title:\t"),
