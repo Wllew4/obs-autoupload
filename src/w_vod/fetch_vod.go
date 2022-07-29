@@ -1,18 +1,18 @@
-package workflow
+package w_vod
 
 import (
+	"auto_upload/src/api_ttv"
 	"auto_upload/src/secrets"
-	"auto_upload/src/ttv"
 	"auto_upload/src/util"
 	"io/ioutil"
 	"path/filepath"
 	"time"
 )
 
-func fetchVodInfo() util.VOD {
-	last_vod := ttv.TTV_Video()
+func FetchVodInfo() VOD {
+	last_vod := api_ttv.TTV_Video()
 
-	return util.VOD{
+	return VOD{
 		Stream_id: last_vod.Stream_id,
 		Title:     last_vod.Title,
 		Ttv_url:   last_vod.Url,

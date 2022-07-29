@@ -1,4 +1,4 @@
-package ttv
+package api_ttv
 
 import "encoding/json"
 

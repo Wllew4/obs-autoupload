@@ -1,8 +1,7 @@
 // ADAPTED FROM: https://github.com/youtube/api-samples/blob/master/go/oauth2.go
-package yt
+package w_oauth2
 
 import (
-	"auto_upload/src/ui"
 	"auto_upload/src/util"
 	"encoding/json"
 	"fmt"
@@ -18,7 +17,7 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-func GetClient(ui_context ui.UIContext, nextStep func(*http.Client), scope string) {
+func GetClient(ui_context util.UIContext, nextStep func(*http.Client), scope string) {
 
 	b, err := ioutil.ReadFile(".credentials/.managed/google_secrets.json")
 	if err != nil {
@@ -39,7 +38,7 @@ func GetClient(ui_context ui.UIContext, nextStep func(*http.Client), scope strin
 		authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
 
 		util.OpenURL(authURL)
-		ui.ReceiveCode(ui_context, oauth2CodeCallback, cacheFile, config, nextStep)
+		receiveCode(ui_context, oauth2CodeCallback, cacheFile, config, nextStep)
 	} else {
 		// token cached
 		nextStep(config.Client(context.Background(), tok))

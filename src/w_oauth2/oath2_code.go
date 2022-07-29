@@ -1,14 +1,15 @@
-package ui
+package w_oauth2
 
 import (
+	"auto_upload/src/util"
 	"net/http"
 
 	"fyne.io/fyne/v2/widget"
 	"golang.org/x/oauth2"
 )
 
-func ReceiveCode(
-	ui_context UIContext,
+func receiveCode(
+	ui_context util.UIContext,
 	oauth2CodeCallback func(
 		string,
 		string,

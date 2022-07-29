@@ -2,9 +2,10 @@ package workflow
 
 import (
 	"auto_upload/src/secrets"
-	"auto_upload/src/ui"
 	"auto_upload/src/util"
-	"auto_upload/src/yt"
+	"auto_upload/src/w_oauth2"
+	"auto_upload/src/w_upload"
+	"auto_upload/src/w_vod"
 	"context"
 	"fmt"
 	"net/http"
@@ -14,26 +15,26 @@ import (
 )
 
 type Workflow struct {
-	ui_context ui.UIContext
-	vod_info   util.VOD
+	ui_context util.UIContext
+	vod_info   w_vod.VOD
 	service    *youtube.Service
 }
 
 func Start() {
 	w := Workflow{}
-	w.ui_context = ui.New()
+	w.ui_context = util.NewUIContext()
 	go w.step_VODInfo()
 	w.ui_context.Window.ShowAndRun()
 }
 
 func (w Workflow) step_VODInfo() {
-	w.vod_info = fetchVodInfo()
-	ui.ShowVOD(w.ui_context, w.vod_info, w.step_OAuth2)
+	w.vod_info = w_vod.FetchVodInfo()
+	w_vod.ShowVOD(w.ui_context, w.vod_info, w.step_OAuth2)
 }
 
 func (w Workflow) step_OAuth2() {
 	secrets.GoogleCreds()
-	yt.GetClient(w.ui_context, w.step_Upload, youtube.YoutubeUploadScope)
+	w_oauth2.GetClient(w.ui_context, w.step_Upload, youtube.YoutubeUploadScope)
 }
 
 func (w Workflow) step_Upload(client *http.Client) {
@@ -42,7 +43,8 @@ func (w Workflow) step_Upload(client *http.Client) {
 	util.CheckErr(err)
 	w.service = service
 
-	fmt.Println(yt.Upload(
+	fmt.Println(w_upload.Upload(
+		w.step_Cleanup,
 		w.service,
 		w.ui_context,
 		w.vod_info.Path,
@@ -52,4 +54,8 @@ func (w Workflow) step_Upload(client *http.Client) {
 		secrets.Config().Upload.TAGS,
 		secrets.Config().Upload.VISIBILITY,
 	))
+}
+
+func (w Workflow) step_Cleanup() {
+
 }

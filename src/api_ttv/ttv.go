@@ -1,4 +1,4 @@
-package ttv
+package api_ttv
 
 import (
 	"auto_upload/src/secrets"

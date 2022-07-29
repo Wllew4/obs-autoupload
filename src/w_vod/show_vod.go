@@ -1,4 +1,4 @@
-package ui
+package w_vod
 
 import (
 	"auto_upload/src/util"
@@ -15,7 +15,7 @@ func populatedEntry(text *string) *widget.Entry {
 	return o
 }
 
-func ShowVOD(ui_context UIContext, vod_info util.VOD, nextStep func()) {
+func ShowVOD(ui_context util.UIContext, vod_info VOD, nextStep func()) {
 	content := container.New(layout.NewFormLayout(),
 		container.NewVBox(
 			widget.NewLabel("Title:\t"),

@@ -1,4 +1,4 @@
-package ui
+package util
 
 import (
 	"fyne.io/fyne/v2"
@@ -27,7 +27,7 @@ func (ui_context UIContext) SetContent(nextStep func(), content ...fyne.CanvasOb
 	ui_context.Window.SetContent(container)
 }
 
-func New() UIContext {
+func NewUIContext() UIContext {
 	app := app.New()
 	window := app.NewWindow("OBS Auto Upload")
 	window.Resize(fyne.NewSize(600, 600))
