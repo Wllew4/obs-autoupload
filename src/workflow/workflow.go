@@ -35,7 +35,7 @@ func (w Workflow) step_VODInfo() {
 
 func (w Workflow) step_OAuth2() {
 	secrets.GoogleCreds()
-	w_oauth2.GetClient(w.ui_context, w.step_Upload, youtube.YoutubeUploadScope)
+	w_oauth2.GetClient(w.ui_context, w.step_Upload)
 }
 
 func (w Workflow) step_Upload(client *http.Client) {
@@ -44,7 +44,7 @@ func (w Workflow) step_Upload(client *http.Client) {
 	util.CheckErr(err)
 	w.service = service
 
-	w.yt_id = w_upload.Upload(
+	w_upload.Upload(
 		w.step_Cleanup,
 		w.service,
 		w.ui_context,
@@ -59,6 +59,7 @@ func (w Workflow) step_Upload(client *http.Client) {
 	)
 }
 
-func (w Workflow) step_Cleanup() {
+func (w Workflow) step_Cleanup(yt_id string) {
+	w.yt_id = yt_id
 	w_cleanup.UI_cleanup(w.ui_context, w.service, w.yt_id, w.vod_info)
 }

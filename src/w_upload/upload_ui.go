@@ -14,11 +14,11 @@ func ui_uploading(ui_context util.UIContext) {
 	)
 }
 
-func ui_uploaded(ui_context util.UIContext, nextStep func(), id string) {
+func ui_uploaded(ui_context util.UIContext, nextStep func(string), id string) {
 	url, err := url.Parse("https://youtube.com/watch?v=" + id)
 	util.CheckErr(err)
 	ui_context.SetContent(
-		func() { nextStep() },
+		func() { nextStep(id) },
 		widget.NewLabel("Success!"),
 		widget.NewHyperlink("https://youtube.com/watch?v="+id, url),
 	)

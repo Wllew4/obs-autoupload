@@ -19,17 +19,19 @@ func add_to_playlist(label *widget.Label, service *youtube.Service, yt_id string
 	part := []string{
 		"snippet",
 	}
-	call := service.PlaylistItems.Insert(part, &youtube.PlaylistItem{
+	playlistItem := youtube.PlaylistItem{
 		Snippet: &youtube.PlaylistItemSnippet{
 			PlaylistId: secrets.Config().Upload.PLAYLIST_ID,
 			ResourceId: &youtube.ResourceId{
-				VideoId: yt_id,
 				Kind:    "youtube#video",
+				VideoId: yt_id,
 			},
 			Position: 0,
 		},
-	})
-	call.Do()
+	}
+	call := service.PlaylistItems.Insert(part, &playlistItem)
+	_, err := call.Do()
+	util.CheckErr(err)
 	label.SetText("Adding to Playlist: Complete!")
 }
 

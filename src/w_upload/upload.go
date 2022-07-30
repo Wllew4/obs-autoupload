@@ -11,7 +11,7 @@ import (
 )
 
 func Upload(
-	nextStep func(),
+	nextStep func(string),
 	service *youtube.Service,
 	ui_context util.UIContext,
 	filename string,
@@ -22,7 +22,7 @@ func Upload(
 	category string,
 	tags []string,
 	privacy string,
-) string {
+) {
 	DEBUGNOUPLOAD := false
 	keywords := strings.Join(tags, ",")
 
@@ -45,7 +45,7 @@ func Upload(
 	}
 
 	ui_uploading(ui_context)
-	var id string
+	var id string = "ID-HERE"
 	if !DEBUGNOUPLOAD {
 		call := service.Videos.Insert([]string{"snippet", "status"}, upload)
 
@@ -57,11 +57,7 @@ func Upload(
 		util.CheckErr(err)
 		fmt.Printf("Upload successful! Video ID: %v\n", response.Id)
 		id = response.Id
-	} else {
-		id = "ID-HERE"
 	}
 
 	ui_uploaded(ui_context, nextStep, id)
-
-	return id
 }

@@ -15,16 +15,17 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/youtube/v3"
 )
 
-func GetClient(ui_context util.UIContext, nextStep func(*http.Client), scope string) {
+func GetClient(ui_context util.UIContext, nextStep func(*http.Client)) {
 
 	b, err := ioutil.ReadFile(".credentials/.managed/google_secrets.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}
 
-	config, err := google.ConfigFromJSON(b, scope)
+	config, err := google.ConfigFromJSON(b, youtube.YoutubeScope)
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
 	}
