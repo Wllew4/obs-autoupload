@@ -3,10 +3,12 @@ package w_cleanup
 import (
 	"auto_upload/src/secrets"
 	"auto_upload/src/util"
+	"auto_upload/src/w_vod"
 
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"google.golang.org/api/youtube/v3"
 )
 
 type (
@@ -67,7 +69,14 @@ func (widgets cleanupui) updatePlaylistCheck(enabled bool) {
 	}
 }
 
-func start_cleanup(ui_context util.UIContext, cleanup_mode string, playlist_enabled bool) {
+func start_cleanup(
+	ui_context util.UIContext,
+	cleanup_mode string,
+	playlist_enabled bool,
+	service *youtube.Service,
+	yt_id string,
+	vod w_vod.VOD,
+) {
 	playlist_label := widget.NewLabel("Adding to Playlist: in progress...")
 	playlist_label.Hide()
 	cleanup_label := widget.NewLabel("Cleanup Step: " + cleanup_mode + ": in progress...")
@@ -80,12 +89,12 @@ func start_cleanup(ui_context util.UIContext, cleanup_mode string, playlist_enab
 	)
 	if playlist_enabled {
 		playlist_label.Show()
-		go add_to_playlist(playlist_label)
+		go add_to_playlist(playlist_label, service, yt_id)
 	}
-	go cleanup_step(cleanup_mode, cleanup_label)
+	go cleanup_step(cleanup_mode, cleanup_label, vod, yt_id)
 }
 
-func UI_cleanup(ui_context util.UIContext) {
+func UI_cleanup(ui_context util.UIContext, service *youtube.Service, yt_id string, vod w_vod.VOD) {
 	cleanup_widgets := NewCleanupUI()
 
 	ui_context.SetContent(
@@ -94,6 +103,9 @@ func UI_cleanup(ui_context util.UIContext) {
 				ui_context,
 				cleanup_widgets.post_upload_dropdown.Selected,
 				cleanup_widgets.playlist_enabled_check.Checked,
+				service,
+				yt_id,
+				vod,
 			)
 		},
 		widget.NewLabel("Confirm cleanup steps"),

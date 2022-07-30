@@ -36,7 +36,8 @@ func GoogleCreds() google_creds_t {
 
 	as_json, err := json.Marshal(managed)
 	util.CheckErr(err)
-	ioutil.WriteFile(wd+"/.credentials/.managed/google_secrets.json", as_json, 0644)
+	err = ioutil.WriteFile(wd+"/.credentials/.managed/google_secrets.json", as_json, 0644)
+	util.CheckErr(err)
 
 	google_cached = true
 	return google_creds

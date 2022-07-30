@@ -8,7 +8,6 @@ import (
 	"auto_upload/src/w_upload"
 	"auto_upload/src/w_vod"
 	"context"
-	"fmt"
 	"net/http"
 
 	"google.golang.org/api/option"
@@ -19,6 +18,7 @@ type Workflow struct {
 	ui_context util.UIContext
 	vod_info   w_vod.VOD
 	service    *youtube.Service
+	yt_id      string
 }
 
 func Start() {
@@ -44,7 +44,7 @@ func (w Workflow) step_Upload(client *http.Client) {
 	util.CheckErr(err)
 	w.service = service
 
-	fmt.Println(w_upload.Upload(
+	w.yt_id = w_upload.Upload(
 		w.step_Cleanup,
 		w.service,
 		w.ui_context,
@@ -56,9 +56,9 @@ func (w Workflow) step_Upload(client *http.Client) {
 		secrets.Config().Upload.CATEGORY_ID,
 		secrets.Config().Upload.TAGS,
 		secrets.Config().Upload.VISIBILITY,
-	))
+	)
 }
 
 func (w Workflow) step_Cleanup() {
-	w_cleanup.UI_cleanup(w.ui_context)
+	w_cleanup.UI_cleanup(w.ui_context, w.service, w.yt_id, w.vod_info)
 }

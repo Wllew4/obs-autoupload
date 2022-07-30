@@ -23,7 +23,7 @@ func Upload(
 	tags []string,
 	privacy string,
 ) string {
-	DEBUGNOUPLOAD := true
+	DEBUGNOUPLOAD := false
 	keywords := strings.Join(tags, ",")
 
 	description = strings.Replace(description, "{TITLE}", title, -1)
