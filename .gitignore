@@ -1,13 +1,1 @@
 *.exe
-
-# configuration
-config.toml
-
-# secrets
-.credentials/*
-!.credentials/*.template.*
-
-# managed secret files
-!.credentials/.managed
-.credentials/.managed/*
-!.credentials/.managed/.gitkeep
