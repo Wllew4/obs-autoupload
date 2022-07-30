@@ -9,9 +9,9 @@ import (
 var config config_t
 var config_cached bool
 
-func Config() config_t {
+func Config() *config_t {
 	if config_cached {
-		return config
+		return &config
 	}
 
 	wd, err := os.Getwd()
@@ -24,7 +24,7 @@ func Config() config_t {
 	}
 
 	config_cached = true
-	return config
+	return &config
 }
 
 type config_t struct {

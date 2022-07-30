@@ -16,6 +16,8 @@ func Upload(
 	ui_context util.UIContext,
 	filename string,
 	title string,
+	date string,
+	ttv_url string,
 	description string,
 	category string,
 	tags []string,
@@ -23,6 +25,10 @@ func Upload(
 ) string {
 	DEBUGNOUPLOAD := true
 	keywords := strings.Join(tags, ",")
+
+	description = strings.Replace(description, "{TITLE}", title, -1)
+	description = strings.Replace(description, "{DATE}", date, -1)
+	description = strings.Replace(description, "{URL}", ttv_url, -1)
 
 	upload := &youtube.Video{
 		Snippet: &youtube.VideoSnippet{

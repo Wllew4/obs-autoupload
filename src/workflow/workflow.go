@@ -50,6 +50,8 @@ func (w Workflow) step_Upload(client *http.Client) {
 		w.ui_context,
 		w.vod_info.Path,
 		w.vod_info.Title,
+		w.vod_info.Date,
+		w.vod_info.Ttv_url,
 		secrets.Config().Upload.DESCRIPTION,
 		secrets.Config().Upload.CATEGORY_ID,
 		secrets.Config().Upload.TAGS,
