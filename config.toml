@@ -1,5 +1,6 @@
 [files]
 # !! Use '/' for all paths !! '\' will crash the program
+
 # Local VOD folder
 # The newest file here will be uploaded
 VOD_DIR = ""
