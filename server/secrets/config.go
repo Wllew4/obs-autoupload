@@ -9,22 +9,22 @@ import (
 var config config_t
 var config_cached bool
 
-func Config() *config_t {
+func Config() (*config_t, error) {
 	if config_cached {
-		return &config
+		return &config, nil
 	}
 
 	wd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	if _, err := toml.DecodeFile(wd+"/config.toml", &config); err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	config_cached = true
-	return &config
+	return &config, nil
 }
 
 type config_t struct {

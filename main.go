@@ -1,7 +1,9 @@
 package main
 
-import "auto_upload/src/workflow"
+import (
+	"auto_upload/server"
+)
 
 func main() {
-	workflow.Start()
+	server.Start()
 }
