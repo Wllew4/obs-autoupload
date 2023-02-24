@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { api_call } from "src/lib/api_call";
+	import { api_call } from "../lib/api_call";
 	export let valid = false
 
 	let config: Promise<string> = api_call('/api/verify')

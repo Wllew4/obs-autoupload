@@ -19,8 +19,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Build
+    - name: Build server
       run: go build
+    
+    - name: Build client
+      run: |
+        cd client
+        yarn install
+        yarn build
 
     - name: Zip
       run: |

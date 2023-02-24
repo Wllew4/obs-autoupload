@@ -1,7 +1,7 @@
 package secrets
 
 import (
-	"auto_upload/src/util"
+	"auto_upload/server/util"
 	"os"
 
 	"github.com/BurntSushi/toml"
