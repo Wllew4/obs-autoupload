@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { api_call } from "./lib/api_call";
-  import Confirm from "./steps/Confirm.svelte";
-  import Verify from "./steps/Verify.svelte";
+	import { api_call } from "./lib/api_call";
+	import Form from "./steps/Form.svelte"
 
 	let version: Promise<string> = api_call('/api/version')
-
-	let valid_config = false
 </script>
 
 <svelte:head>
@@ -30,11 +27,7 @@
 	</div>
 	<hr>
 
-	<Verify bind:valid={valid_config}/>
-
-	{#if valid_config}
-		<Confirm/>
-	{/if}
+	<Form/>
 
 </div>
 

@@ -34,8 +34,8 @@ func Start() {
 
 	// api
 	mux.HandleFunc("/api/version", api.Version)
-	mux.HandleFunc("/api/verify", api.VerifyConfig)
 	mux.HandleFunc("/api/vod", api.VOD)
+	mux.HandleFunc("/api/config", api.Config)
 	mux.HandleFunc("/api/upload", api.Upload)
 
 	// serve and open
