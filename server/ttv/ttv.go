@@ -1,8 +1,8 @@
-package api_ttv
+package ttv
 
 import (
-	"auto_upload/src/secrets"
-	"auto_upload/src/util"
+	"auto_upload/server/secrets"
+	"auto_upload/server/util"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -35,7 +35,8 @@ func TTV_AccessToken() ttv_access_token {
 
 func TTV_User() ttv_user {
 	client := http.Client{}
-	config := secrets.Config()
+	config, err := secrets.Config()
+	util.CheckErr(err)
 	req, err := http.NewRequest(
 		"GET",
 		fmt.Sprintf(

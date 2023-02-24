@@ -16,7 +16,6 @@
 	<div id="title">obs-autoupload
 		{#await version} ...
 		{:then data} { data }
-		{:catch error} uh oh! {error}
 		{/await}
 	</div>
 	<div id="credit">by <a href="https://twitter.com/soupsu_" target="_blank">Wllew4</a></div>

@@ -1,8 +1,7 @@
 package server
 
 import (
-	"auto_upload/server/secrets"
-	"encoding/json"
+	"auto_upload/server/api"
 	"log"
 	"net/http"
 	"os/exec"
@@ -26,20 +25,6 @@ func openInBrowser(path string) {
 	}
 }
 
-func serveConfig(w http.ResponseWriter, r *http.Request) {
-	config, err := secrets.Config()
-	if err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-	as_json, err := json.Marshal(config)
-	if err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Write([]byte(as_json))
-}
-
 func Start() {
 	mux := http.NewServeMux()
 
@@ -48,9 +33,10 @@ func Start() {
 	mux.Handle("/", fileServer)
 
 	// api
-	mux.HandleFunc("/api/version", version)
-	mux.HandleFunc("/api/verify", verify)
-	mux.HandleFunc("/api/config", serveConfig)
+	mux.HandleFunc("/api/version", api.Version)
+	mux.HandleFunc("/api/verify", api.VerifyConfig)
+	mux.HandleFunc("/api/vod", api.VOD)
+	mux.HandleFunc("/api/upload", api.Upload)
 
 	// serve and open
 	openInBrowser("http://localhost:80")

@@ -19,7 +19,7 @@ func Config() (*config_t, error) {
 		return nil, err
 	}
 
-	if _, err := toml.DecodeFile(wd+"/config.toml", &config); err != nil {
+	if _, err := toml.DecodeFile(wd+"/devconfig.toml", &config); err != nil {
 		return nil, err
 	}
 

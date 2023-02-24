@@ -1,16 +1,16 @@
-package w_vod
+package vod
 
 import (
-	"auto_upload/src/api_ttv"
-	"auto_upload/src/secrets"
-	"auto_upload/src/util"
+	"auto_upload/server/secrets"
+	"auto_upload/server/ttv"
+	"auto_upload/server/util"
 	"io/ioutil"
 	"path/filepath"
 	"time"
 )
 
 func FetchVodInfo() VOD {
-	last_vod := api_ttv.TTV_Video()
+	last_vod := ttv.TTV_Video()
 
 	return VOD{
 		Stream_id: last_vod.Stream_id,
@@ -22,7 +22,9 @@ func FetchVodInfo() VOD {
 }
 
 func findNewestVODFile() string {
-	dir := secrets.Config().Files.VOD_DIR
+	cfg, err := secrets.Config()
+	util.CheckErr(err)
+	dir := cfg.Files.VOD_DIR
 	files, err := ioutil.ReadDir(dir)
 	util.CheckErr(err)
 

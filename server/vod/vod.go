@@ -1,4 +1,4 @@
-package w_vod
+package vod
 
 type VOD struct {
 	Title     string

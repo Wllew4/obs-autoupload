@@ -1,43 +1,49 @@
 <script lang="ts">
+	import { api_call } from "../lib/api_call"
 
-	let data = {
-		title: "💖 FINISHING STRAY | @Soupsu_",
-		date: "2022-08-15",
-		path: "D:\\Videos\\VODs\\2022-08-15 19-50-42.mkv",
-		url: "https://www.twitch.tv/videos/1563109387",
+	type VOD = {
+		Title: string
+		Date: string
+		Path: string
+		Stream_id: string
+		Ttv_url: string
 	}
 
-	function confirm() {
-		data.title	= document.getElementsByTagName("input")[0].value
-		data.date	= document.getElementsByTagName("input")[1].value
-		data.path	= document.getElementsByTagName("input")[2].value
-		data.url	= document.getElementsByTagName("input")[3].value
-		console.log(data)
+	async function getVOD(): Promise<VOD> {
+		return JSON.parse(await api_call('/api/vod'))
 	}
+
+	let data = getVOD()
 
 </script>
 
+{#await data} ...
+{:then data} 
+<form method="POST" action="/api/upload">
+	<table>
+		<tr>
+			<td><label for="title">Title</label></td>
+			<td><input name="title" type="text" value={data.Title}/></td>
+		</tr>
+		<tr>
+			<td><label for="date">Date</label></td>
+			<td><input name="date" type="text" value={data.Date}/></td>
+		</tr>
+		<tr>
+			<td><label for="path">Path</label></td>
+			<td><input name="path" type="text" value={data.Path}/></td>
+		</tr>
+		<tr>
+			<td><label for="url">Url</label></td>
+			<td><input name="url" type="text" value={data.Ttv_url}/></td>
+		</tr>
+		<tr>
+			<td><button>Confirm</button></td>
+		</tr>
+	</table>
+</form>
+{/await}
 
-<table>
-	<tr>
-		<td>Title</td>
-		<td><input value={data.title}></td>
-	</tr>
-	<tr>
-		<td>Date</td>
-		<td><input value={data.date}></td>
-	</tr>
-	<tr>
-		<td>Path</td>
-		<td><input value={data.path}></td>
-	</tr>
-	<tr>
-		<td>Url</td>
-		<td><input value={data.url}></td>
-	</tr>
-</table>
-
-<button on:click={confirm}>Confirm</button>
 
 <style lang="scss">
 	input {
